@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Top Tracks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='tracks.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('home') }}"><button>Back</button></a>
+    <h1>Top Tracks</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Track</th>
+                <th>Length</th>
+                <th>Popularity</th>
+                <th>Artist</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for track in tracks %}
+            <tr>
+                <td>{{ track.name }}</td>
+                <td>{{ track.time }}|  |</td>
+                <td>{{ track.popularity }}</td>
+                <td>{{ track.artist }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

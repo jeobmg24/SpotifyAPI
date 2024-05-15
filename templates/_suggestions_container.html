@@ -1,0 +1,9 @@
+{% if suggestions %}
+<ul>
+    {% for suggestion in suggestions %}
+    <li>{{ suggestion.name }} - {{ suggestion.artist }} (Popularity: {{ suggestion.popularity }})</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No recommendations found.</p>
+{% endif %}

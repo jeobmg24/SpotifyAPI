@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Suggestions form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form id="recommendations-form" method="POST">
+        <label for="genre_song">Genre of songs:</label>
+        <input type="text" id="genre_song" name="genre" placeholder="rock">
+        <br>
+        <label for="base_artist">Artist music should be based on:</label>
+        <input type="text" id="base_artist" name="artist" placeholder="ACDC">
+        <br>
+        <label for="popularity">Range of Popularity:</label>
+        <br>
+        <input type="number" id="popularity" name="minimum" placeholder="0">
+        <p> - </p>
+        <input type="number" id="popularity" name="maximum" placeholder="100">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="recommendations-container"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#recommendations-form').submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-recommendations',
+                    data: formData,
+                    success: function(data) {
+                        var recommendationsHTML = '';
+
+                        if (data.length > 0) {
+                            recommendationsHTML += '<h2>Recommendations:</h2>';
+                            recommendationsHTML += '<table id="recommendations-table">';
+                            recommendationsHTML += '<tr><th>No.</th><th>Song</th><th>Artist</th><th>Popularity</th><th>Action</th></tr>';
+
+                            var rowCount = 0;
+                            var columnCount = 0;
+
+                            $.each(data, function(index, suggestion) {
+                                if (columnCount === 0) {
+                                    recommendationsHTML += '<tr>';
+                                }
+
+                                recommendationsHTML += '<td>' + (index + 1) + '. ' + suggestion.name + '<br>' + suggestion.artist + '<br>' + suggestion.popularity + '</td>';
+
+                                columnCount++;
+                                if (columnCount === 5 || index === data.length - 1) {
+                                    recommendationsHTML += '</tr>';
+                                    columnCount = 0;
+                                    rowCount++;
+                                }
+
+                                if (rowCount === 3) {
+                                    recommendationsHTML += '</table>';
+                                    break;
+                                }
+                            });
+
+                            recommendationsHTML += '</table>';
+                        } else {
+                            recommendationsHTML += '<p>No recommendations found.</p>';
+                        }
+
+                        $('#recommendations-container').html(recommendationsHTML);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log('Error:', textStatus, errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

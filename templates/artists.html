@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top Artists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='artists.css') }}">
+</head>
+<body>
+    <a href ="{{url_for('home') }}"><button> Back </button></a>
+    <h1>Top Artists</h1>
+    <table>
+        <thead>
+            <tr>
+                <h4>Artists</h4>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in artists|batch(4) %}
+            <tr>
+                {% for artist in row %}
+                <td>
+                    <h3>{{ artist.name }}</h3>
+                    {% if artist.picture %}
+                    <img src="{{ artist.picture }}" alt="{{ artist.name }}">
+                    {% else %}
+                    No image available
+                    {% endif %}
+                    <p>Popularity: {{ artist.popularity }}</p>
+                    <p>Genres: {{ artist.genres|join(', ') }}</p>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

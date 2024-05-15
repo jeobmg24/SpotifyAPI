@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suggestions for you</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='suggestions.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('home') }}"><button>Back</button></a>
+    <h2>Suggestions for you</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Popularity</th>
+        </tr>
+        {% for suggestion in data %}
+        <tr>
+            <td>{{ suggestion.name }}</td>
+            <td>{{ suggestion.artist }}</td>
+            <td>{{ suggestion.popularity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('get_custom_recommendations') }}"><button>Suggestion form</button></a>
+</body>
+</html>

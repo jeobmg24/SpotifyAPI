@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to My Spotify App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <h2>Choose what you want to see</h2>
+    <div class="button-container">
+        <a href="{{ url_for('get_playlists') }}" class="button-link"><button class="button">See All Playlists</button></a>
+        <a href="{{ url_for('get_top_artists') }}" class="button-link"><button class="button">See Top Artists</button></a>
+        <a href="{{ url_for('get_top_tracks') }}" class="button-link"><button class="button">See Top Tracks</button></a>
+        <a href="{{ url_for('get_song_suggestions') }}" class="button-link"><button class="button">Find Recommendations</button></a>
+    </div>
+</body>
+</html>
